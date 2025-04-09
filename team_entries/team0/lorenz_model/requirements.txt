@@ -1,0 +1,4 @@
+deepxde
+torch
+numpy
+matplotlib
