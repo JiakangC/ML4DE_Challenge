@@ -17,6 +17,7 @@ def sin(x):
     return torch.sin(x)
 
 
+# %%
 # ===================================================
 # 2. Neural Network Definition for (x, t) Inputs
 # ===================================================
@@ -321,7 +322,7 @@ nu = torch.nn.Parameter(torch.tensor([0.5], dtype=torch.float32, device=device))
 # 9. Training Process
 # ===================================================
 
-optimizer = optim.Adam(list(model.parameters()) + [nu], lr=0.001)
+optimizer = optim.Adam(list(model.parameters()) + [nu], lr=0.01)
 epochs = 5000
 
 loss_history = []
