@@ -68,3 +68,5 @@ The model files should allow the competition administrator to run your model (wi
 5. Check the website to see your team's current ranking
 
 The Maths4DL team wishes you all best of luck for the competition!
+
+Note this repo is simply copy from https://github.com/m4DL-Mathematics-for-Deep-Learning/ML4DE_hackathon 
