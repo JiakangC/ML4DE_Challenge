@@ -181,7 +181,7 @@ def train_loss(model, data, nu):
     loss_ic = initial_loss(model, x_ic, t_ic, u_ic_target)
     loss_d = data_loss(model, x_data, t_data, u_data_target)
 
-    total_loss = loss_r + loss_b + loss_ic + loss_d
+    total_loss = loss_r + 1000 * loss_b + 1000 * loss_ic + 1000 * loss_d
     return total_loss, loss_r, loss_b, loss_ic, loss_d
 
 
@@ -311,7 +311,7 @@ model = NeuralNetwork(
     num_neurons=50,
     input_size=2,
     output_size=1,
-    activation_function=tanh,
+    activation_function=sin,
 ).to(device)
 print(model)
 
@@ -513,4 +513,22 @@ plot_comparison(x_pred, t_pred, u_truth, u_pred)
 rel_error = evaluate_prediction(u_truth, u_pred)
 print("Relative L2 error between prediction and ground truth:", rel_error)
 
+# %%
+import os
+
+# Save the prediction
+TEAM_FOLDER = "/home2/qtzk83/projects/ML4DE_Challenge/team_entries/team3"
+os.makedirs(TEAM_FOLDER, exist_ok=True)
+
+params["num_steps"] = 201
+PREDICTION_FILE = os.path.join(TEAM_FOLDER, "ks_prediction.npy")
+np.save(
+    PREDICTION_FILE,
+    u_pred[int((params["num_steps"] - 1) / 2) + 1 : params["num_steps"]],
+)
+
+print(f"Saved prediction to: {PREDICTION_FILE}")
+print(
+    f"Prediction shape: {u_pred[int((params['num_steps'] - 1) / 2) + 1 : params['num_steps']].shape}"
+)
 # %%
