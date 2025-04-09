@@ -505,14 +505,24 @@ with torch.no_grad():
 
 # Reshape the predictions to a 2D grid.
 u_pred = u_pred.reshape(n_time, n_space)
-
+u_pred.shape
 # --- Plot and Compare ---
 plot_comparison(x_pred, t_pred, u_truth, u_pred)
 
 # --- Evaluate the Prediction Error ---
 rel_error = evaluate_prediction(u_truth, u_pred)
 print("Relative L2 error between prediction and ground truth:", rel_error)
+# %%
+# Generate prediction points
+t = np.linspace(0, params["T"], 201)
+x = np.linspace(0, params["L"], params["N"])
+X, T = np.meshgrid(x, t)
+X_star = np.hstack((X.flatten()[:, None], T.flatten()[:, None]))
 
+u_pred = model(X, T)
+u_pred = u_pred.reshape(len(t), len(x))
+
+plot_solution(x, t, u_pred)
 # %%
 import os
 
@@ -524,9 +534,8 @@ params["num_steps"] = 201
 PREDICTION_FILE = os.path.join(TEAM_FOLDER, "ks_prediction.npy")
 np.save(
     PREDICTION_FILE,
-    u_pred[int((params["num_steps"] - 1) / 2) + 1 : params["num_steps"]],
+    u_pred[: params["num_steps"]].shape,
 )
-
 print(f"Saved prediction to: {PREDICTION_FILE}")
 print(
     f"Prediction shape: {u_pred[int((params['num_steps'] - 1) / 2) + 1 : params['num_steps']].shape}"
