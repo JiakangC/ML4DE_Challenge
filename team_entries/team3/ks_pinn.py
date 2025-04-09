@@ -534,7 +534,7 @@ params["num_steps"] = 201
 PREDICTION_FILE = os.path.join(TEAM_FOLDER, "ks_prediction.npy")
 np.save(
     PREDICTION_FILE,
-    u_pred[: params["num_steps"]].shape,
+    u_pred[: params["num_steps"]],
 )
 print(f"Saved prediction to: {PREDICTION_FILE}")
 print(
